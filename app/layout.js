@@ -1,3 +1,4 @@
+import Link from 'next/link';  // <-- add this import
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 
@@ -24,7 +25,7 @@ export default function RootLayout({ children }) {
         {/* Header with logo */}
         <header className="bg-white shadow p-4 flex items-center justify-between">
           <div className="text-xl font-bold text-black">
-            <a href="/">MyLogo</a>  {/* You can replace with <Image> if using next/image */}
+            <Link href="/">MyLogo</Link> {/* Replaced <a> with <Link> */}
           </div>
         </header>
 

@@ -4,6 +4,7 @@ import React, { useState, useEffect } from "react";
 import jsPDF from "jspdf";
 import autoTable from "jspdf-autotable";
 import ConfirmDialog from "@/app/components/ConfirmDialog.jsx";
+import LogoutButton from "../components/LogoutButton";
 
 export default function DashboardPage() {
   // Load customers from localStorage initially
@@ -79,7 +80,9 @@ export default function DashboardPage() {
   // Records state is managed in CustomerRecordView
 
   return (
-    <div className="min-h-screen bg-gray-100 p-6">
+  
+    <div className="min-h-screen bg-gray-100 p-6 relative">
+        <LogoutButton className="absolute top-6 right-6"/>
       <h1 className="text-3xl font-bold text-center mb-20">Dashboard - Customers</h1>
 
       {!selectedCustomer && (
@@ -215,6 +218,8 @@ export default function DashboardPage() {
           onDeleteRecord={(id) => setRecords((prev) => prev.filter((r) => r.id !== id))}
         />
       )}
+    
+
     </div>
   );
 }

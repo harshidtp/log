@@ -11,9 +11,6 @@ export default function Home() {
 <div className="min-h-screen flex flex-col items-center justify-center bg-gray-50 px-4">
   <AuthForm mode="login"/>
   
-<p className="mt-4 text-center">
-Create an account <Link href="/signup" className="text-blue-600 underline">Sign up</Link>
-</p>
 
 </div>
 

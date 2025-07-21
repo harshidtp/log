@@ -1,9 +1,9 @@
 "use client";
+import backgroundImg from "@/public/assets/bg.jpg"; // assuming image is here
 
-import { useState } from "react";
+import { useState, useEffect} from "react";
 import { useRouter } from "next/navigation";
-import supabase from "../lib/supabaseClinets"; // default import, no {}
-
+import supabase from "../lib/supabaseClinets";
 
 export default function AuthForm() {
   const [mode, setMode] = useState("login");
@@ -48,81 +48,106 @@ export default function AuthForm() {
     } finally {
       setLoading(false);
     }
-  };
+  }
+  useEffect(() => {
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.body.style.overflow = "auto";
+    };
+  }, []);
 
   return (
-    <div className="bg-white rounded-lg shadow-lg p-8 max-w-md mx-auto">
-      <h2 className="text-2xl font-bold mb-6 text-center">
-        {mode === "login" ? "Login" : "Sign Up"}
-      </h2>
+    <div
+      className="flex items-center justify-end min-h-screen w-full px-8 bg-gray-100"
+      style={{
+        backgroundImage: `url(${backgroundImg.src})`,
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+        backgroundAttachment: "fixed",
+        height: "100vh",
+        overflow: "hidden",
+      }}
+    >
+      <div className="bg-white rounded-lg shadow-lg p-8 max-w-md mx-auto">
+        <h2 className="text-2xl font-bold mb-6 text-center">
+          {mode === "login" ? "Login" : "Sign Up"}
+        </h2>
 
-      <input
-        type="email"
-        placeholder="Email"
-        value={email}
-        onChange={(e) => setEmail(e.target.value)}
-        className="border border-gray-300 rounded-lg p-3 mb-4 w-full focus:outline-none focus:ring-2 focus:ring-blue-500"
-      />
+        <input
+          type="email"
+          placeholder="Email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          className="border border-gray-300 rounded-lg p-3 mb-4 w-full focus:outline-none focus:ring-2 focus:ring-blue-500"
+        />
 
-      {mode === "signup" && (
-        <>
-          <input
-            type="tel"
-            placeholder="Mobile number (optional)"
-            value={mobile}
-            onChange={(e) => setMobile(e.target.value)}
-            className="border border-gray-300 rounded-lg p-3 mb-4 w-full focus:outline-none focus:ring-2 focus:ring-blue-500"
-          />
-
-          <input
-            type="password"
-            placeholder="Confirm Password"
-            value={confirmPassword}
-            onChange={(e) => setConfirmPassword(e.target.value)}
-            className="border border-gray-300 rounded-lg p-3 mb-4 w-full focus:outline-none focus:ring-2 focus:ring-blue-500"
-          />
-        </>
-      )}
-
-      <input
-        type="password"
-        placeholder="Password"
-        value={password}
-        onChange={(e) => setPassword(e.target.value)}
-        className="border border-gray-300 rounded-lg p-3 mb-6 w-full focus:outline-none focus:ring-2 focus:ring-blue-500"
-      />
-
-      <button
-        onClick={handleAuth}
-        disabled={loading}
-        className="w-full bg-black text-white p-2 rounded disabled:opacity-50"
-      >
-        {loading
-          ? mode === "login"
-            ? "Logging in..."
-            : "Signing up..."
-          : mode === "login"
-          ? "Login"
-          : "Sign Up"}
-      </button>
-
-      <p className="mt-4 text-center text-gray-600">
-        {mode === "login" ? (
+        {mode === "signup" && (
           <>
-            Don’t have an account?{" "}
-            <button onClick={() => setMode("signup")} className="text-blue-600 underline">
-              Sign Up
-            </button>
-          </>
-        ) : (
-          <>
-            Already have an account?{" "}
-            <button onClick={() => setMode("login")} className="text-blue-600 underline">
-              Login
-            </button>
+            <input
+              type="tel"
+              placeholder="Mobile number (optional)"
+              value={mobile}
+              onChange={(e) => setMobile(e.target.value)}
+              className="border border-gray-300 rounded-lg p-3 mb-4 w-full focus:outline-none focus:ring-2 focus:ring-blue-500"
+            />
+
+            <input
+              type="password"
+              placeholder="Confirm Password"
+              value={confirmPassword}
+              onChange={(e) => setConfirmPassword(e.target.value)}
+              className="border border-gray-300 rounded-lg p-3 mb-4 w-full focus:outline-none focus:ring-2 focus:ring-blue-500"
+            />
           </>
         )}
-      </p>
+
+        <input
+          type="password"
+          placeholder="Password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          className="border border-gray-300 rounded-lg p-3 mb-6 w-full focus:outline-none focus:ring-2 focus:ring-blue-500"
+        />
+
+        <button
+          onClick={handleAuth}
+          disabled={loading}
+          className="w-full bg-black text-white p-2 rounded disabled:opacity-50"
+        >
+          {loading
+            ? mode === "login"
+              ? "Logging in..."
+              : "Signing up..."
+            : mode === "login"
+            ? "Login"
+            : "Sign Up"}
+        </button>
+
+        <p className="mt-4 text-center text-gray-600">
+          {mode === "login" ? (
+            <>
+              Don’t have an account?{" "}
+              <button
+                onClick={() => setMode("signup")}
+                className="text-blue-600 underline"
+              >
+                Sign Up
+              </button>
+            </>
+          ) : (
+            <>
+              Already have an account?{" "}
+              <button
+                onClick={() => setMode("login")}
+                className="text-blue-600 underline"
+              >
+                Login
+              </button>
+            </>
+          )}
+        </p>
+      </div>
     </div>
   );
 }
+
